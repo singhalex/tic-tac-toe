@@ -1,0 +1,30 @@
+:root {
+  --square-size: 200px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+#board-container {
+  margin: auto;
+  margin-top: 4rem;
+  max-width: 900px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  justify-items: center;
+}
+
+.square {
+  font-family: "Rock Salt", cursive;
+  width: var(--square-size);
+  height: var(--square-size);
+  background-color: red;
+  text-align: center;
+  line-height: var(--square-size);
+  font-size: 4rem;
+}
