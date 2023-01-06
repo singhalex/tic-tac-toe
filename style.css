@@ -28,11 +28,13 @@ body {
 }
 
 #player-names > * {
-  flex-basis: 40%;
+  flex-basis: 48%;
 }
 
-input::after {
-  content: "Nope";
+input {
+  padding: 0.25rem;
+  border-width: 3px;
+  /* font-size: 0.75rem; */
 }
 
 #board-container {
@@ -59,6 +61,12 @@ input::after {
   color: white;
 }
 
+#game-over-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
 button {
   font-size: 1.5rem;
   letter-spacing: 2px;
@@ -80,10 +88,4 @@ button:active {
   box-shadow: 0px 0px 0px 0px;
   top: 5px;
   left: 5px;
-}
-
-@media (min-width: 768px) {
-  .button-54 {
-    padding: 0.25em 0.75em;
-  }
 }

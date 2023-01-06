@@ -19,8 +19,13 @@ const Player = (symbol) => {
 
   const getPlayerName = () => playerName;
 
+  const reset = () => {
+    ownedSquares.length = 0;
+    playerName = '';
+  };
+
   return {
-    getSymbol, updateSquares, getOwnedSquares, updatePlayerName, getPlayerName,
+    getSymbol, updateSquares, getOwnedSquares, updatePlayerName, getPlayerName, reset,
   };
 };
 
@@ -31,6 +36,7 @@ const gameLogic = (() => {
   let _activePlayer = playerX;
   let gameOver = false;
   const winnerAnnounce = document.getElementById('winner-announcement');
+  const gameOverArea = document.getElementById('game-over-container');
 
   const getActivePlayer = () => _activePlayer;
 
@@ -80,17 +86,23 @@ const gameLogic = (() => {
       && _activePlayer.getOwnedSquares().includes(7))
     ) {
       winnerAnnounce.innerText = `${_activePlayer.getPlayerName()} is the winner!`;
+      gameOverArea.classList.remove('hidden');
       gameEnd();
     } else if (_activePlayer.getOwnedSquares().length === 5) {
       winnerAnnounce.innerText = "It's a tie!";
+      gameOverArea.classList.remove('hidden');
       gameEnd();
     }
   };
 
   const isGameOver = () => gameOver;
+  const reset = () => {
+    _activePlayer = playerX;
+    gameOver = false;
+  };
 
   return {
-    getActivePlayer, changeActivePlayer, checkWinner, isGameOver,
+    getActivePlayer, changeActivePlayer, checkWinner, isGameOver, reset,
   };
 })();
 
@@ -100,7 +112,11 @@ const board = (() => {
   const getBoardArray = () => _squares;
 
   const render = (() => {
-    const boardContainer = document.getElementById('board-container');
+    console.log('rendering');
+    const playerNameArea = document.getElementById('player-names');
+    const boardContainer = document.createElement('div');
+    boardContainer.setAttribute('id', 'board-container');
+    playerNameArea.insertAdjacentElement('afterend', boardContainer);
 
     _squares.forEach((i) => {
       // Create elements and add classes
@@ -142,4 +158,14 @@ startButton.addEventListener('click', () => {
     playerNameArea.classList.add('hidden');
     board.render();
   }
+});
+
+const newGameButton = document.getElementById('new-game');
+newGameButton.addEventListener('click', () => {
+  playerNameArea.classList.remove('hidden');
+  const boardContainer = document.getElementById('board-container');
+  boardContainer.remove();
+  gameLogic.reset();
+  playerO.reset();
+  playerX.reset();
 });
