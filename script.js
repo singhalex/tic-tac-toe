@@ -132,7 +132,6 @@ const startButton = document.getElementById('start-button');
 const playerXInput = document.getElementById('player-x-name');
 const playerOInput = document.getElementById('player-o-name');
 const playerNameArea = document.getElementById('player-names');
-const inputError = document.getElementById('input-error');
 
 startButton.addEventListener('click', () => {
   if (playerXInput.value !== '' && playerOInput.value !== '') {

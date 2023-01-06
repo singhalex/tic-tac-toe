@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
   font-size: 20px;
+  font-family: "Open Sans", sans-serif;
 }
 
 #title {
@@ -50,9 +51,39 @@ input::after {
   font-family: "Rock Salt", cursive;
   width: var(--square-size);
   height: var(--square-size);
-  background-color: red;
+  background-color: black;
   text-align: center;
   line-height: var(--square-size);
   font-size: 4rem;
   user-select: none;
+  color: white;
+}
+
+button {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px,
+    5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
 }
