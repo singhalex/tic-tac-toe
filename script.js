@@ -64,6 +64,8 @@ const gameLogic = (() => {
       && _activePlayer.getOwnedSquares().includes(7))
     ) {
       console.log('Winner!');
+    } else if (_activePlayer.getOwnedSquares().length === 5) {
+      console.log('Tie');
     }
   };
 
