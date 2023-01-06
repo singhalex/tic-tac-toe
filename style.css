@@ -1,11 +1,15 @@
 :root {
-  --square-size: 180px;
+  --square-size: 140px;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-size: 20px;
+}
+
+#title {
+  text-align: center;
 }
 
 #player_names {
@@ -18,13 +22,21 @@ body {
   justify-content: center;
 }
 
+.hidden {
+  display: none !important;
+}
+
 #player_names > * {
   flex-basis: 40%;
 }
 
+input::after {
+  content: "Nope";
+}
+
 #board-container {
   margin: auto;
-  margin-top: 1rem;
+  margin-top: 2rem;
   max-width: 900px;
   padding: 0;
   list-style: none;

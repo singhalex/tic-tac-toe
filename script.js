@@ -2,8 +2,10 @@
 /* eslint-disable no-underscore-dangle */
 
 const Player = (symbol) => {
-  const getSymbol = () => symbol;
   const ownedSquares = [];
+  let playerName = '';
+
+  const getSymbol = () => symbol;
 
   const updateSquares = (squareNumber) => {
     ownedSquares.push(squareNumber);
@@ -11,7 +13,15 @@ const Player = (symbol) => {
 
   const getOwnedSquares = () => ownedSquares;
 
-  return { getSymbol, updateSquares, getOwnedSquares };
+  const updatePlayerName = (inputName) => {
+    playerName = inputName;
+  };
+
+  const getPlayerName = () => playerName;
+
+  return {
+    getSymbol, updateSquares, getOwnedSquares, updatePlayerName, getPlayerName,
+  };
 };
 
 const playerX = Player('X');
@@ -19,6 +29,7 @@ const playerO = Player('O');
 
 const gameLogic = (() => {
   let _activePlayer = playerX;
+  let gameOver = false;
 
   const getActivePlayer = () => _activePlayer;
 
@@ -28,6 +39,10 @@ const gameLogic = (() => {
     } else if (_activePlayer === playerO) {
       _activePlayer = playerX;
     }
+  };
+
+  const gameEnd = () => {
+    gameOver = true;
   };
 
   const checkWinner = () => {
@@ -63,13 +78,19 @@ const gameLogic = (() => {
       && _activePlayer.getOwnedSquares().includes(5)
       && _activePlayer.getOwnedSquares().includes(7))
     ) {
-      console.log('Winner!');
+      console.log(`${_activePlayer.getPlayerName()} is the winner!`);
+      gameEnd();
     } else if (_activePlayer.getOwnedSquares().length === 5) {
-      console.log('Tie');
+      console.log("It's a tie!");
+      gameEnd();
     }
   };
 
-  return { getActivePlayer, changeActivePlayer, checkWinner };
+  const isGameOver = () => gameOver;
+
+  return {
+    getActivePlayer, changeActivePlayer, checkWinner, isGameOver,
+  };
 })();
 
 const board = (() => {
@@ -88,7 +109,9 @@ const board = (() => {
 
       // Change text on click
       square.addEventListener('click', () => {
-        if (square.innerText === '') {
+        if (gameLogic.isGameOver()) {
+          console.log('game over');
+        } else if (square.innerText === '') {
           square.innerText = gameLogic.getActivePlayer().getSymbol();
           gameLogic.getActivePlayer().updateSquares(Number(square.dataset.index));
           gameLogic.checkWinner();
@@ -99,7 +122,24 @@ const board = (() => {
       // Add squares to page
       boardContainer.appendChild(square);
     });
-  })();
+  });
 
-  return { getBoardArray };
+  return { getBoardArray, init };
 })();
+
+const startButton = document.getElementById('start_button');
+const playerXInput = document.getElementById('player_x_name');
+const playerOInput = document.getElementById('player_o_name');
+const playerNameArea = document.getElementById('player_names');
+const inputError = document.getElementById('input_error');
+
+startButton.addEventListener('click', () => {
+  if (playerXInput.value !== '' && playerOInput.value !== '') {
+    playerX.updatePlayerName(playerXInput.value);
+    playerO.updatePlayerName(playerOInput.value);
+    playerXInput.value = '';
+    playerOInput.value = '';
+    playerNameArea.classList.add('hidden');
+    board.init();
+  }
+});
