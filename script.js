@@ -30,6 +30,7 @@ const playerO = Player('O');
 const gameLogic = (() => {
   let _activePlayer = playerX;
   let gameOver = false;
+  const winnerAnnounce = document.getElementById('winner-announcement');
 
   const getActivePlayer = () => _activePlayer;
 
@@ -78,10 +79,10 @@ const gameLogic = (() => {
       && _activePlayer.getOwnedSquares().includes(5)
       && _activePlayer.getOwnedSquares().includes(7))
     ) {
-      console.log(`${_activePlayer.getPlayerName()} is the winner!`);
+      winnerAnnounce.innerText = `${_activePlayer.getPlayerName()} is the winner!`;
       gameEnd();
     } else if (_activePlayer.getOwnedSquares().length === 5) {
-      console.log("It's a tie!");
+      winnerAnnounce.innerText = "It's a tie!";
       gameEnd();
     }
   };
@@ -98,7 +99,7 @@ const board = (() => {
 
   const getBoardArray = () => _squares;
 
-  const init = (() => {
+  const render = (() => {
     const boardContainer = document.getElementById('board-container');
 
     _squares.forEach((i) => {
@@ -124,14 +125,14 @@ const board = (() => {
     });
   });
 
-  return { getBoardArray, init };
+  return { getBoardArray, render };
 })();
 
-const startButton = document.getElementById('start_button');
-const playerXInput = document.getElementById('player_x_name');
-const playerOInput = document.getElementById('player_o_name');
-const playerNameArea = document.getElementById('player_names');
-const inputError = document.getElementById('input_error');
+const startButton = document.getElementById('start-button');
+const playerXInput = document.getElementById('player-x-name');
+const playerOInput = document.getElementById('player-o-name');
+const playerNameArea = document.getElementById('player-names');
+const inputError = document.getElementById('input-error');
 
 startButton.addEventListener('click', () => {
   if (playerXInput.value !== '' && playerOInput.value !== '') {
@@ -140,6 +141,6 @@ startButton.addEventListener('click', () => {
     playerXInput.value = '';
     playerOInput.value = '';
     playerNameArea.classList.add('hidden');
-    board.init();
+    board.render();
   }
 });

@@ -16,17 +16,21 @@
   </head>
   <body>
     <h1 id="title">Tic-Tac-Toe</h1>
-    <div id="player_names">
+    <div id="player-names">
       <div>
-        <label for="player_name">Player X Name:</label>
-        <input type="text" name="player_x_name" id="player_x_name" />
+        <label for="player-x-name">Player X Name:</label>
+        <input type="text" name="player-x-name" id="player-x-name" />
       </div>
       <div>
-        <label for="player_o_name">Player O Name:</label>
-        <input type="text" name="player_o_name" id="player_o_name" />
+        <label for="player-o-name">Player O Name:</label>
+        <input type="text" name="player-o-name" id="player-o-name" />
       </div>
-      <button id="start_button">Start Game</button>
+      <button id="start-button">Start Game</button>
     </div>
     <ul id="board-container"></ul>
+    <div id="game-over-container">
+      <h2 id="winner-announcement"></h2>
+      <button>New Game</button>
+    </div>
   </body>
 </html>
