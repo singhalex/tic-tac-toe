@@ -31,44 +31,38 @@ const gameLogic = (() => {
   };
 
   const checkWinner = () => {
-    if (_activePlayer.getOwnedSquares().includes(1)
+    if ((_activePlayer.getOwnedSquares().includes(1)
       && _activePlayer.getOwnedSquares().includes(2)
-      && _activePlayer.getOwnedSquares().includes(3)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(4)
+      && _activePlayer.getOwnedSquares().includes(3))
+
+      || (_activePlayer.getOwnedSquares().includes(4)
       && _activePlayer.getOwnedSquares().includes(5)
-      && _activePlayer.getOwnedSquares().includes(6)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(7)
+      && _activePlayer.getOwnedSquares().includes(6))
+
+      || (_activePlayer.getOwnedSquares().includes(7)
       && _activePlayer.getOwnedSquares().includes(8)
-      && _activePlayer.getOwnedSquares().includes(9)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(1)
+      && _activePlayer.getOwnedSquares().includes(9))
+
+      || (_activePlayer.getOwnedSquares().includes(1)
       && _activePlayer.getOwnedSquares().includes(4)
-      && _activePlayer.getOwnedSquares().includes(7)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(2)
+      && _activePlayer.getOwnedSquares().includes(7))
+
+      || (_activePlayer.getOwnedSquares().includes(2)
       && _activePlayer.getOwnedSquares().includes(5)
-      && _activePlayer.getOwnedSquares().includes(8)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(3)
+      && _activePlayer.getOwnedSquares().includes(8))
+
+      || (_activePlayer.getOwnedSquares().includes(3)
       && _activePlayer.getOwnedSquares().includes(6)
-      && _activePlayer.getOwnedSquares().includes(9)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(1)
+      && _activePlayer.getOwnedSquares().includes(9))
+
+      || (_activePlayer.getOwnedSquares().includes(1)
       && _activePlayer.getOwnedSquares().includes(5)
-      && _activePlayer.getOwnedSquares().includes(9)) {
-      console.log('Winner!');
-    }
-    if (_activePlayer.getOwnedSquares().includes(3)
+      && _activePlayer.getOwnedSquares().includes(9))
+
+      || (_activePlayer.getOwnedSquares().includes(3)
       && _activePlayer.getOwnedSquares().includes(5)
-      && _activePlayer.getOwnedSquares().includes(7)) {
+      && _activePlayer.getOwnedSquares().includes(7))
+    ) {
       console.log('Winner!');
     }
   };
