@@ -1,5 +1,5 @@
 :root {
-  --square-size: 200px;
+  --square-size: 180px;
 }
 
 body {
@@ -8,15 +8,30 @@ body {
   font-size: 20px;
 }
 
+#player_names {
+  margin: auto;
+  padding-top: 1rem;
+  max-width: 900px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#player_names > * {
+  flex-basis: 40%;
+}
+
 #board-container {
   margin: auto;
-  margin-top: 4rem;
+  margin-top: 1rem;
   max-width: 900px;
+  padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, var(--square-size));
   gap: 1rem;
-  justify-items: center;
+  justify-content: center;
 }
 
 .square {
