@@ -35,8 +35,34 @@ const playerO = Player('O');
 const gameLogic = (() => {
   let _activePlayer = playerX;
   let gameOver = false;
+
   const winnerAnnounce = document.getElementById('winner-announcement');
   const gameOverArea = document.getElementById('game-over-container');
+
+  const startButton = document.getElementById('start-button');
+  const playerXInput = document.getElementById('player-x-name');
+  const playerOInput = document.getElementById('player-o-name');
+  const playerNameArea = document.getElementById('player-names');
+
+  const start = () => {
+    playerNameArea.classList.remove('hidden');
+    const boardContainer = document.getElementById('board-container');
+    boardContainer.remove();
+    gameLogic.reset();
+    playerO.reset();
+    playerX.reset();
+  };
+
+  const newGame = () => {
+    if (playerXInput.value !== '' && playerOInput.value !== '') {
+      playerX.updatePlayerName(playerXInput.value);
+      playerO.updatePlayerName(playerOInput.value);
+      playerXInput.value = '';
+      playerOInput.value = '';
+      playerNameArea.classList.add('hidden');
+      board.render();
+    }
+  };
 
   const getActivePlayer = () => _activePlayer;
 
@@ -101,8 +127,17 @@ const gameLogic = (() => {
     gameOver = false;
   };
 
+  const newGameButton = document.getElementById('new-game');
+  newGameButton.addEventListener('click', () => {
+    start();
+  });
+
+  startButton.addEventListener('click', () => {
+    gameLogic.newGame();
+  });
+
   return {
-    getActivePlayer, changeActivePlayer, checkWinner, isGameOver, reset,
+    getActivePlayer, changeActivePlayer, checkWinner, isGameOver, reset, newGame,
   };
 })();
 
@@ -112,7 +147,6 @@ const board = (() => {
   const getBoardArray = () => _squares;
 
   const render = (() => {
-    console.log('rendering');
     const playerNameArea = document.getElementById('player-names');
     const boardContainer = document.createElement('div');
     boardContainer.setAttribute('id', 'board-container');
@@ -143,29 +177,3 @@ const board = (() => {
 
   return { getBoardArray, render };
 })();
-
-const startButton = document.getElementById('start-button');
-const playerXInput = document.getElementById('player-x-name');
-const playerOInput = document.getElementById('player-o-name');
-const playerNameArea = document.getElementById('player-names');
-
-startButton.addEventListener('click', () => {
-  if (playerXInput.value !== '' && playerOInput.value !== '') {
-    playerX.updatePlayerName(playerXInput.value);
-    playerO.updatePlayerName(playerOInput.value);
-    playerXInput.value = '';
-    playerOInput.value = '';
-    playerNameArea.classList.add('hidden');
-    board.render();
-  }
-});
-
-const newGameButton = document.getElementById('new-game');
-newGameButton.addEventListener('click', () => {
-  playerNameArea.classList.remove('hidden');
-  const boardContainer = document.getElementById('board-container');
-  boardContainer.remove();
-  gameLogic.reset();
-  playerO.reset();
-  playerX.reset();
-});
