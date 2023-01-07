@@ -44,16 +44,17 @@ const gameLogic = (() => {
   const playerOInput = document.getElementById('player-o-name');
   const playerNameArea = document.getElementById('player-names');
 
-  const start = () => {
+  const newGame = () => {
     playerNameArea.classList.remove('hidden');
     const boardContainer = document.getElementById('board-container');
+    gameOverArea.classList.add('hidden');
     boardContainer.remove();
     gameLogic.reset();
     playerO.reset();
     playerX.reset();
   };
 
-  const newGame = () => {
+  const startGame = () => {
     if (playerXInput.value !== '' && playerOInput.value !== '') {
       playerX.updatePlayerName(playerXInput.value);
       playerO.updatePlayerName(playerOInput.value);
@@ -129,11 +130,11 @@ const gameLogic = (() => {
 
   const newGameButton = document.getElementById('new-game');
   newGameButton.addEventListener('click', () => {
-    start();
+    newGame();
   });
 
   startButton.addEventListener('click', () => {
-    gameLogic.newGame();
+    startGame();
   });
 
   return {
