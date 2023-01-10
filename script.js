@@ -1,12 +1,74 @@
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 
+const userInterface = (() => {
+  // Get DOM elements
+  const gameOverArea = document.getElementById('game-over-container');
+  const winnerAnnounce = document.getElementById('winner-announcement');
+
+  const playerNameArea = document.getElementById('player-names');
+  const playerXInput = document.getElementById('player-x-name');
+  const playerOInput = document.getElementById('player-o-name');
+  const startButton = document.getElementById('start-button');
+  const newGameButton = document.getElementById('new-game');
+
+  const startGame = () => {
+    // Sets the player names based on input fields and creates the board
+    if (playerXInput.value !== '' && playerOInput.value !== '') {
+      playerX.updatePlayerName(playerXInput.value);
+      playerO.updatePlayerName(playerOInput.value);
+      playerXInput.value = '';
+      playerOInput.value = '';
+      playerNameArea.classList.add('hidden');
+      board.render();
+    }
+  };
+  startButton.addEventListener('click', () => {
+    startGame();
+  });
+
+  const newGame = () => {
+    // Reverts page to starting state
+
+    playerNameArea.classList.remove('hidden');
+    const boardContainer = document.getElementById('board-container');
+    gameOverArea.classList.add('hidden');
+
+    // Deletes the board
+    boardContainer.remove();
+
+    gameLogic.reset();
+    playerO.reset();
+    playerX.reset();
+  };
+  newGameButton.addEventListener('click', () => {
+    newGame();
+  });
+
+  const announceWinner = (activePlayer) => {
+    gameOverArea.classList.remove('hidden');
+    winnerAnnounce.innerText = `${activePlayer.getPlayerName()} is the winner!`;
+  };
+
+  const announceTie = () => {
+    gameOverArea.classList.remove('hidden');
+    winnerAnnounce.innerText = "It's a tie!";
+  };
+
+  return {
+    announceWinner, announceTie,
+  };
+})();
+
 const Player = (symbol) => {
+  // Initial values
   const ownedSquares = [];
   let playerName = '';
 
+  // Returns the player's symbol
   const getSymbol = () => symbol;
 
+  // Adds the number of the board square to the player's square array
   const updateSquares = (squareNumber) => {
     ownedSquares.push(squareNumber);
   };
@@ -19,6 +81,7 @@ const Player = (symbol) => {
 
   const getPlayerName = () => playerName;
 
+  // Puts the player variables back to their initial values
   const reset = () => {
     ownedSquares.length = 0;
     playerName = '';
@@ -29,41 +92,14 @@ const Player = (symbol) => {
   };
 };
 
+// Create the 2 players
 const playerX = Player('X');
 const playerO = Player('O');
 
 const gameLogic = (() => {
+  // Sets the first player and game over state
   let _activePlayer = playerX;
   let gameOver = false;
-
-  const winnerAnnounce = document.getElementById('winner-announcement');
-  const gameOverArea = document.getElementById('game-over-container');
-
-  const startButton = document.getElementById('start-button');
-  const playerXInput = document.getElementById('player-x-name');
-  const playerOInput = document.getElementById('player-o-name');
-  const playerNameArea = document.getElementById('player-names');
-
-  const newGame = () => {
-    playerNameArea.classList.remove('hidden');
-    const boardContainer = document.getElementById('board-container');
-    gameOverArea.classList.add('hidden');
-    boardContainer.remove();
-    gameLogic.reset();
-    playerO.reset();
-    playerX.reset();
-  };
-
-  const startGame = () => {
-    if (playerXInput.value !== '' && playerOInput.value !== '') {
-      playerX.updatePlayerName(playerXInput.value);
-      playerO.updatePlayerName(playerOInput.value);
-      playerXInput.value = '';
-      playerOInput.value = '';
-      playerNameArea.classList.add('hidden');
-      board.render();
-    }
-  };
 
   const getActivePlayer = () => _activePlayer;
 
@@ -112,33 +148,23 @@ const gameLogic = (() => {
       && _activePlayer.getOwnedSquares().includes(5)
       && _activePlayer.getOwnedSquares().includes(7))
     ) {
-      winnerAnnounce.innerText = `${_activePlayer.getPlayerName()} is the winner!`;
-      gameOverArea.classList.remove('hidden');
+      userInterface.announceWinner(_activePlayer);
       gameEnd();
     } else if (_activePlayer.getOwnedSquares().length === 5) {
-      winnerAnnounce.innerText = "It's a tie!";
-      gameOverArea.classList.remove('hidden');
+      userInterface.announceTie();
       gameEnd();
     }
   };
 
   const isGameOver = () => gameOver;
+
   const reset = () => {
     _activePlayer = playerX;
     gameOver = false;
   };
 
-  const newGameButton = document.getElementById('new-game');
-  newGameButton.addEventListener('click', () => {
-    newGame();
-  });
-
-  startButton.addEventListener('click', () => {
-    startGame();
-  });
-
   return {
-    getActivePlayer, changeActivePlayer, checkWinner, isGameOver, reset, newGame,
+    getActivePlayer, changeActivePlayer, checkWinner, isGameOver, reset,
   };
 })();
 
